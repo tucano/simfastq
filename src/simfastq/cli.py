@@ -36,20 +36,9 @@ _logger = logging.getLogger(__name__)
 # when using this Python module as a library.
 
 
-def fib(n):
-    """Fibonacci example function
-
-    Args:
-      n (int): integer
-
-    Returns:
-      int: n-th Fibonacci number
-    """
-    assert n > 0
-    a, b = 1, 1
-    for _i in range(n - 1):
-        a, b = b, a + b
-    return a
+def simfastq():
+    """simfastq entry point"""
+    print("[bold green]hello from simfastq function[/bold green]")
 
 
 # ---- CLI ----
@@ -126,7 +115,7 @@ def main(args):
 
     print("[bold green]simfastq[/bold green]")
     print("Args:", args)
-
+    simfastq()
     _logger.info("Script ends here")
 
 

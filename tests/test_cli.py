@@ -1,19 +1,14 @@
-import pytest
-
-from simfastq.cli import fib, main
+from simfastq.cli import main, simfastq
 
 __author__ = "Davide Rambaldi"
 __copyright__ = "Davide Rambaldi"
 __license__ = "MIT"
 
 
-def test_fib():
+def test_simfastq():
     """API Tests"""
-    assert fib(1) == 1
-    assert fib(2) == 1
-    assert fib(7) == 13
-    with pytest.raises(AssertionError):
-        fib(-10)
+    simfastq()
+    assert False
 
 
 def test_main(capsys):
