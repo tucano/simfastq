@@ -1,6 +1,6 @@
 import pytest
 
-from simfastq.skeleton import fib, main
+from simfastq.cli import fib, main
 
 __author__ = "Davide Rambaldi"
 __copyright__ = "Davide Rambaldi"
