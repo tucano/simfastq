@@ -20,6 +20,6 @@ def test_main(capsys):
     """CLI Tests"""
     # capsys is a pytest fixture that allows asserts against stdout/stderr
     # https://docs.pytest.org/en/stable/capture.html
-    main(["7"])
+    main([])
     captured = capsys.readouterr()
-    assert "The 7-th Fibonacci number is 13" in captured.out
+    assert "Args: Namespace" in captured.out

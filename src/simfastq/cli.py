@@ -1,19 +1,13 @@
 """
-This is a skeleton file that can serve as a starting point for a Python
-console script. To run this script uncomment the following lines in the
+CLI for simfastq the fastq sequences generator
+
 ``[options.entry_points]`` section in ``setup.cfg``::
 
     console_scripts =
          fibonacci = simfastq.skeleton:run
 
 Then run ``pip install .`` (or ``pip install -e .`` for editable mode)
-which will install the command ``fibonacci`` inside your current environment.
-
-Besides console scripts, the header (i.e. until ``_logger``...) of this file can
-also be used as template for Python modules.
-
-Note:
-    This file can be renamed depending on your needs or safely removed if not needed.
+which will install the command ``simfastq`` inside your current environment.
 
 References:
     - https://setuptools.pypa.io/en/latest/userguide/entry_point.html
@@ -23,6 +17,8 @@ References:
 import argparse
 import logging
 import sys
+
+from rich import pretty, print
 
 from simfastq import __version__
 
@@ -72,13 +68,13 @@ def parse_args(args):
     Returns:
       :obj:`argparse.Namespace`: command line parameters namespace
     """
-    parser = argparse.ArgumentParser(description="Just a Fibonacci demonstration")
+    parser = argparse.ArgumentParser(description="Generate artificial fastq sequences")
     parser.add_argument(
         "--version",
         action="version",
         version=f"simfastq {__version__}",
     )
-    parser.add_argument(dest="n", help="n-th Fibonacci number", type=int, metavar="INT")
+
     parser.add_argument(
         "-v",
         "--verbose",
@@ -87,6 +83,7 @@ def parse_args(args):
         action="store_const",
         const=logging.INFO,
     )
+
     parser.add_argument(
         "-vv",
         "--very-verbose",
@@ -95,6 +92,7 @@ def parse_args(args):
         action="store_const",
         const=logging.DEBUG,
     )
+
     return parser.parse_args(args)
 
 
@@ -120,10 +118,15 @@ def main(args):
       args (List[str]): command line parameters as list of strings
           (for example  ``["--verbose", "42"]``).
     """
+    pretty.install()
+
     args = parse_args(args)
     setup_logging(args.loglevel)
     _logger.debug("Starting crazy calculations...")
-    print(f"The {args.n}-th Fibonacci number is {fib(args.n)}")
+
+    print("[bold green]simfastq[/bold green]")
+    print("Args:", args)
+
     _logger.info("Script ends here")
 
 
