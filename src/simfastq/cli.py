@@ -49,7 +49,7 @@ def simfastq(arg_seed):
     random.seed(seed)
     test = random_record(sequence_length=100, x_pos=1, y_pos=1, read=1)
     print("[bold green]READ:[/bold green]")
-    write_record(test)
+    write_record(test, sys.stdout)
 
 
 # ---- CLI ----

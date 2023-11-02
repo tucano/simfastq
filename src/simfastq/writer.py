@@ -1,5 +1,4 @@
 import logging
-import sys
 
 from Bio import SeqIO
 
@@ -10,6 +9,6 @@ __license__ = "MIT"
 _logger = logging.getLogger(__name__)
 
 
-def write_record(seq_record):
+def write_record(seq_record, out_fh):
     """Write a seqRecord to fastq format"""
-    SeqIO.write(seq_record, sys.stdout, "fastq")
+    SeqIO.write(seq_record, out_fh, "fastq")
