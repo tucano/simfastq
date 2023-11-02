@@ -16,11 +16,15 @@ References:
 
 import argparse
 import logging
+import random
 import sys
 
 from rich import pretty, print
 
 from simfastq import __version__
+from simfastq.generator import random_record
+from simfastq.seed import generate_seed
+from simfastq.writer import write_record
 
 __author__ = "Davide Rambaldi"
 __copyright__ = "Davide Rambaldi"
@@ -36,9 +40,16 @@ _logger = logging.getLogger(__name__)
 # when using this Python module as a library.
 
 
-def simfastq():
+def simfastq(arg_seed):
     """simfastq entry point"""
-    print("[bold green]hello from simfastq function[/bold green]")
+    print("[bold green]SIMFASTQ[/bold green]")
+    print("[green]Simulation started[/green]")
+    seed = generate_seed(arg_seed)
+    print(f"Using seed: {seed}")
+    random.seed(seed)
+    test = random_record(sequence_length=100, x_pos=1, y_pos=1, read=1)
+    print("[bold green]READ:[/bold green]")
+    write_record(test)
 
 
 # ---- CLI ----
@@ -57,7 +68,8 @@ def parse_args(args):
     Returns:
       :obj:`argparse.Namespace`: command line parameters namespace
     """
-    parser = argparse.ArgumentParser(description="Generate artificial fastq sequences")
+    parser = argparse.ArgumentParser(description="Generate artificial fastq sequences.")
+
     parser.add_argument(
         "--version",
         action="version",
@@ -81,6 +93,30 @@ def parse_args(args):
         action="store_const",
         const=logging.DEBUG,
     )
+
+    parser.add_argument(
+        "-n",
+        "--number-of-reads",
+        dest="number_of_reads",
+        help="number of reads per file -> example: -n 10000",
+        default=1,
+    )
+
+    parser.add_argument(
+        "-p",
+        "--paired-end",
+        dest="paired_end",
+        help="generate paired end reads.",
+        action="store_true",
+    )
+
+    parser.add_argument("-s", "--seed", dest="seed", help="generation random seed")
+
+    parser.add_argument(
+        "-S", "--samples", dest="samples", help="number of samples", default=1
+    )
+
+    parser.add_argument("outdir", metavar="OUTDIR", help="output files directory.")
 
     return parser.parse_args(args)
 
@@ -115,7 +151,7 @@ def main(args):
 
     print("[bold green]simfastq[/bold green]")
     print("Args:", args)
-    simfastq()
+    simfastq(arg_seed=args.seed)
     _logger.info("Script ends here")
 
 
